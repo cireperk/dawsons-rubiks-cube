@@ -7,16 +7,19 @@ import "./App.css";
 function SplashScreen({ onFinish }: { onFinish: () => void }) {
   const [fadeOut, setFadeOut] = useState(false);
 
+  const dismiss = useCallback(() => {
+    if (fadeOut) return;
+    setFadeOut(true);
+    setTimeout(onFinish, 800);
+  }, [fadeOut, onFinish]);
+
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setFadeOut(true);
-      setTimeout(onFinish, 800);
-    }, 8000);
+    const timer = setTimeout(dismiss, 8000);
     return () => clearTimeout(timer);
-  }, [onFinish]);
+  }, [dismiss]);
 
   return (
-    <div className={`splash-screen ${fadeOut ? "fade-out" : ""}`}>
+    <div className={`splash-screen ${fadeOut ? "fade-out" : ""}`} onClick={dismiss} onTouchEnd={dismiss}>
       <Fireworks />
       <div className="splash-title">
         Dawson's
