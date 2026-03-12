@@ -76,6 +76,23 @@ function Cubie({
 }) {
   const [ix, iy, iz] = cubieData.initialPosition;
   const gridPos = cubieData.position;
+  const quat = cubieData.quaternion;
+
+  // Transform local face normals to world space so drag direction is correct
+  // after the cubie has been rotated by previous moves
+  const wrappedDown = onStickerDown
+    ? (e: THREE.Event, localNormal: THREE.Vector3, pos: THREE.Vector3) => {
+        const worldNormal = localNormal.clone().applyQuaternion(quat).normalize();
+        // Snap to nearest axis to avoid float drift
+        const ax = Math.abs(worldNormal.x);
+        const ay = Math.abs(worldNormal.y);
+        const az = Math.abs(worldNormal.z);
+        if (ax >= ay && ax >= az) worldNormal.set(Math.sign(worldNormal.x), 0, 0);
+        else if (ay >= ax && ay >= az) worldNormal.set(0, Math.sign(worldNormal.y), 0);
+        else worldNormal.set(0, 0, Math.sign(worldNormal.z));
+        onStickerDown(e, worldNormal, pos);
+      }
+    : undefined;
 
   return (
     <group
@@ -84,7 +101,7 @@ function Cubie({
         gridPos.y * OFFSET,
         gridPos.z * OFFSET,
       ]}
-      quaternion={cubieData.quaternion}
+      quaternion={quat}
     >
       <RoundedBox
         args={[CUBE_SIZE, CUBE_SIZE, CUBE_SIZE]}
@@ -100,7 +117,7 @@ function Cubie({
           color={FACE_COLORS.right}
           faceNormal={new THREE.Vector3(1, 0, 0)}
           cubieGridPos={gridPos}
-          onStickerDown={onStickerDown}
+          onStickerDown={wrappedDown}
         />
       )}
       {ix === -1 && (
@@ -110,7 +127,7 @@ function Cubie({
           color={FACE_COLORS.left}
           faceNormal={new THREE.Vector3(-1, 0, 0)}
           cubieGridPos={gridPos}
-          onStickerDown={onStickerDown}
+          onStickerDown={wrappedDown}
         />
       )}
       {iy === 1 && (
@@ -120,7 +137,7 @@ function Cubie({
           color={FACE_COLORS.top}
           faceNormal={new THREE.Vector3(0, 1, 0)}
           cubieGridPos={gridPos}
-          onStickerDown={onStickerDown}
+          onStickerDown={wrappedDown}
         />
       )}
       {iy === -1 && (
@@ -130,7 +147,7 @@ function Cubie({
           color={FACE_COLORS.bottom}
           faceNormal={new THREE.Vector3(0, -1, 0)}
           cubieGridPos={gridPos}
-          onStickerDown={onStickerDown}
+          onStickerDown={wrappedDown}
         />
       )}
       {iz === 1 && (
@@ -140,7 +157,7 @@ function Cubie({
           color={FACE_COLORS.front}
           faceNormal={new THREE.Vector3(0, 0, 1)}
           cubieGridPos={gridPos}
-          onStickerDown={onStickerDown}
+          onStickerDown={wrappedDown}
         />
       )}
       {iz === -1 && (
@@ -150,7 +167,7 @@ function Cubie({
           color={FACE_COLORS.back}
           faceNormal={new THREE.Vector3(0, 0, -1)}
           cubieGridPos={gridPos}
-          onStickerDown={onStickerDown}
+          onStickerDown={wrappedDown}
         />
       )}
     </group>
@@ -312,7 +329,7 @@ function CubeScene({
 
         // Wait for minimum drag to determine direction
         if (!drag.determined) {
-          if (dragLength < 0.25) return;
+          if (dragLength < 0.12) return;
 
           // Cross product of face normal and drag direction gives rotation axis
           const cross = new THREE.Vector3()
