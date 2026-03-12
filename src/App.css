@@ -80,7 +80,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: gradient-shift 3s ease infinite;
+  animation: gradient-shift 3s ease infinite, fade-in 1s ease-out 0.2s both;
   position: relative;
   z-index: 2;
 }
@@ -101,6 +101,7 @@
   padding: 0 1rem;
   position: relative;
   z-index: 2;
+  animation: fade-in 1s ease-out 1.6s both;
 }
 
 @keyframes fade-in {
@@ -119,6 +120,7 @@
   flex-shrink: 0;
   position: relative;
   z-index: 2;
+  animation: fade-in 1s ease-out 0.8s both;
 }
 
 /* ===== MAIN APP ===== */

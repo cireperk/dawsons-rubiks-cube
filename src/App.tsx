@@ -14,7 +14,7 @@ function SplashScreen({ onFinish }: { onFinish: () => void }) {
   }, [fadeOut, onFinish]);
 
   useEffect(() => {
-    const timer = setTimeout(dismiss, 4000);
+    const timer = setTimeout(dismiss, 6000);
     return () => clearTimeout(timer);
   }, [dismiss]);
 
