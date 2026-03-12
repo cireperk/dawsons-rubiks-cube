@@ -61,6 +61,8 @@
   z-index: 10;
   background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0a 100%);
   transition: opacity 0.8s ease-out;
+  padding: 2rem 1rem;
+  overflow: hidden;
 }
 
 .splash-screen.fade-out {
@@ -88,14 +90,13 @@
 
 .splash-message {
   font-family: 'Inter', sans-serif;
-  font-size: 1.05rem;
+  font-size: clamp(0.9rem, 2.5vw, 1.05rem);
   color: rgba(255, 255, 255, 0.7);
   margin-top: 1.5rem;
   max-width: 400px;
   text-align: center;
   line-height: 1.6;
-  padding: 0 1.5rem;
-  animation: fade-in 1s ease-out both;
+  padding: 0 1rem;
 }
 
 @keyframes fade-in {
@@ -109,8 +110,9 @@
 }
 
 .splash-cube-container {
-  width: 200px;
-  height: 200px;
+  width: clamp(140px, 30vw, 200px);
+  height: clamp(140px, 30vw, 200px);
+  flex-shrink: 0;
 }
 
 /* ===== MAIN APP ===== */

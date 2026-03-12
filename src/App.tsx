@@ -6,20 +6,13 @@ import "./App.css";
 
 function SplashScreen({ onFinish }: { onFinish: () => void }) {
   const [fadeOut, setFadeOut] = useState(false);
-  const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
-    // Show the message after 2s so the title has time to be read
-    const msgTimer = setTimeout(() => setShowMessage(true), 2000);
-    // Then fade out after 8s total
-    const fadeTimer = setTimeout(() => {
+    const timer = setTimeout(() => {
       setFadeOut(true);
       setTimeout(onFinish, 800);
     }, 8000);
-    return () => {
-      clearTimeout(msgTimer);
-      clearTimeout(fadeTimer);
-    };
+    return () => clearTimeout(timer);
   }, [onFinish]);
 
   return (
@@ -33,12 +26,10 @@ function SplashScreen({ onFinish }: { onFinish: () => void }) {
       <div className="splash-cube-container">
         <RubiksCube3D speed={1.2} />
       </div>
-      {showMessage && (
-        <div className="splash-message">
-          Hi, my name is Dawson and I love Rubik's cubes. My dad and I made this
-          app to help solve Rubik's cubes!
-        </div>
-      )}
+      <div className="splash-message">
+        Hi, my name is Dawson and I love Rubik's cubes. My dad and I made this
+        app to help solve Rubik's cubes!
+      </div>
     </div>
   );
 }
