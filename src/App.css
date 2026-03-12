@@ -72,7 +72,7 @@
   font-family: 'Fredoka One', cursive;
   font-size: clamp(1.5rem, 5vw, 3rem);
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   background: linear-gradient(135deg, #ff3d00, #ffab00, #00e676, #2979ff, #d500f9);
   background-size: 300% 300%;
   -webkit-background-clip: text;
@@ -90,12 +90,12 @@
   font-family: 'Inter', sans-serif;
   font-size: 1.05rem;
   color: rgba(255, 255, 255, 0.7);
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   max-width: 400px;
   text-align: center;
   line-height: 1.6;
   padding: 0 1.5rem;
-  animation: fade-in 1.5s ease-out 0.5s both;
+  animation: fade-in 1s ease-out both;
 }
 
 @keyframes fade-in {
