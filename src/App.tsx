@@ -26,7 +26,10 @@ function SplashScreen({ onFinish }: { onFinish: () => void }) {
       <div className="splash-cube-container">
         <RubiksCube3D speed={1.2} />
       </div>
-      <div className="splash-subtitle">Loading awesomeness...</div>
+      <div className="splash-message">
+        Hi, my name is Dawson and I love Rubik's cubes. My dad and I made this
+        app to help solve Rubik's cubes!
+      </div>
     </div>
   );
 }
