@@ -1,0 +1,353 @@
+/* ===== FIREWORKS ===== */
+.fireworks-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.firework {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+}
+
+.firework-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  animation: firework-burst 1.5s ease-out forwards;
+}
+
+@keyframes firework-burst {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes firework-rise {
+  0% {
+    transform: translateY(100vh);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+}
+
+/* ===== SPLASH SCREEN ===== */
+.splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0a 100%);
+  transition: opacity 0.8s ease-out;
+}
+
+.splash-screen.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.splash-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  text-align: center;
+  margin-bottom: 2rem;
+  background: linear-gradient(135deg, #ff3d00, #ffab00, #00e676, #2979ff, #d500f9);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 3s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.splash-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 2rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.splash-cube-container {
+  width: 200px;
+  height: 200px;
+}
+
+/* ===== MAIN APP ===== */
+.app-container {
+  min-height: 100vh;
+  position: relative;
+}
+
+.app-header {
+  text-align: center;
+  padding: 2rem 1rem 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.app-header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(1.2rem, 4vw, 2rem);
+  background: linear-gradient(135deg, #ff3d00, #ffab00, #00e676, #2979ff, #d500f9);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 3s ease infinite;
+}
+
+/* ===== TUTORIAL STEPS ===== */
+.tutorial-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.step-navigation {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  padding: 0 1rem;
+}
+
+.step-dot {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-dot:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.step-dot.active {
+  border-color: #ffab00;
+  background: linear-gradient(135deg, #ff3d00, #ffab00);
+  color: #000;
+  transform: scale(1.15);
+  box-shadow: 0 0 20px rgba(255, 171, 0, 0.4);
+}
+
+.step-dot.completed {
+  border-color: #00e676;
+  background: rgba(0, 230, 118, 0.2);
+  color: #00e676;
+}
+
+.step-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  animation: card-in 0.4s ease-out;
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.step-card h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #ffab00;
+}
+
+.step-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1rem;
+}
+
+.step-card p {
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.step-card .tip {
+  background: rgba(0, 230, 118, 0.1);
+  border: 1px solid rgba(0, 230, 118, 0.3);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #a5d6a7;
+}
+
+.step-card .tip strong {
+  color: #00e676;
+}
+
+.step-card .notation {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(41, 121, 255, 0.2);
+  border: 1px solid rgba(41, 121, 255, 0.4);
+  border-radius: 8px;
+  padding: 0.2rem 0.6rem;
+  font-family: 'Fredoka One', cursive;
+  font-size: 0.9rem;
+  color: #64b5f6;
+  margin: 0 0.15rem;
+}
+
+.step-card .algorithm {
+  background: rgba(213, 0, 249, 0.1);
+  border: 1px solid rgba(213, 0, 249, 0.3);
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 1rem 0;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  color: #ce93d8;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+.step-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+.step-btn {
+  padding: 0.8rem 2rem;
+  border-radius: 12px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.step-btn.prev {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.step-btn.prev:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.step-btn.next {
+  background: linear-gradient(135deg, #ff3d00, #ffab00);
+  color: #000;
+  margin-left: auto;
+}
+
+.step-btn.next:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 171, 0, 0.4);
+}
+
+.cube-scene-container {
+  width: 100%;
+  height: 280px;
+  margin: 1.5rem 0;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+}
+
+.cube-hint {
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+}
+
+/* ===== PROGRESS BAR ===== */
+.progress-bar-container {
+  max-width: 800px;
+  margin: 1rem auto;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.progress-bar-bg {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff3d00, #ffab00, #00e676);
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.progress-text {
+  text-align: center;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 0.5rem;
+}
