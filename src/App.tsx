@@ -34,7 +34,30 @@ function SplashScreen({ onFinish }: { onFinish: () => void }) {
   );
 }
 
-function TutorialView() {
+function ThanksScreen({ onRestart }: { onRestart: () => void }) {
+  return (
+    <div className="thanks-screen">
+      <Fireworks />
+      <Fireworks />
+      <Fireworks />
+      <div className="thanks-content">
+        <div className="thanks-cube">
+          <RubiksCube3D speed={0.8} />
+        </div>
+        <h1 className="thanks-title">You Did It!</h1>
+        <p className="thanks-message">
+          Thanks for using Dawson's Rubik's Cube app
+        </p>
+        <p className="thanks-credit">Built by Dawson and Dad</p>
+        <button className="thanks-restart" onClick={onRestart}>
+          Start Over
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function TutorialView({ onComplete }: { onComplete: () => void }) {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(
     new Set()
@@ -43,7 +66,6 @@ function TutorialView() {
   const goToStep = useCallback(
     (step: number) => {
       if (step >= 0 && step < tutorialSteps.length) {
-        // Mark current step as completed when moving forward
         if (step > currentStep) {
           setCompletedSteps((prev) => new Set([...prev, currentStep]));
         }
@@ -58,8 +80,6 @@ function TutorialView() {
 
   return (
     <div className="app-container">
-      <Fireworks />
-
       <div className="app-header">
         <h1>Dawson's How to Solve a Rubik's Cube</h1>
       </div>
@@ -140,14 +160,7 @@ function TutorialView() {
                 Next Step →
               </button>
             ) : (
-              <button
-                className="step-btn next"
-                onClick={() => {
-                  setCompletedSteps(
-                    new Set(tutorialSteps.map((_, i) => i))
-                  );
-                }}
-              >
+              <button className="step-btn next" onClick={onComplete}>
                 🎉 I Did It!
               </button>
             )}
@@ -159,12 +172,16 @@ function TutorialView() {
 }
 
 function App() {
-  const [showSplash, setShowSplash] = useState(true);
+  const [screen, setScreen] = useState<"splash" | "tutorial" | "thanks">(
+    "splash"
+  );
 
-  return showSplash ? (
-    <SplashScreen onFinish={() => setShowSplash(false)} />
+  return screen === "splash" ? (
+    <SplashScreen onFinish={() => setScreen("tutorial")} />
+  ) : screen === "tutorial" ? (
+    <TutorialView onComplete={() => setScreen("thanks")} />
   ) : (
-    <TutorialView />
+    <ThanksScreen onRestart={() => setScreen("splash")} />
   );
 }
 
