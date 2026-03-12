@@ -24,7 +24,7 @@ function SplashScreen({ onFinish }: { onFinish: () => void }) {
         How to Solve a Rubik's Cube
       </div>
       <div className="splash-cube-container">
-        <RubiksCube3D speed={1.2} />
+        <RubiksCube3D interactive />
       </div>
       <div className="splash-message">
         Hi, my name is Dawson and I love Rubik's cubes. My dad and I made this
@@ -42,7 +42,7 @@ function ThanksScreen({ onRestart }: { onRestart: () => void }) {
       <Fireworks />
       <div className="thanks-content">
         <div className="thanks-cube">
-          <RubiksCube3D speed={0.8} />
+          <RubiksCube3D interactive />
         </div>
         <h1 className="thanks-title">You Did It!</h1>
         <p className="thanks-message">
@@ -116,7 +116,7 @@ function TutorialView({ onComplete }: { onComplete: () => void }) {
           <h3>{step.subtitle}</h3>
 
           <div className="cube-scene-container">
-            <RubiksCube3D moves={step.demoMoves} interactive />
+            <RubiksCube3D interactive />
             <div className="cube-hint">
               Swipe a face to turn it · Drag background to orbit
             </div>
